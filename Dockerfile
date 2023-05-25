@@ -6,6 +6,7 @@ WORKDIR /app
 COPY package.json package.json
 COPY tsconfig.json tsconfig.json
 COPY index.ts index.ts
+COPY controllers controllers
 COPY dist dist
 
 # install deps
@@ -16,4 +17,4 @@ EXPOSE 8080
 
 CMD [ "npm", "start" ]
 
-VOLUME '/app'
+VOLUME '/app/config'

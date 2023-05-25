@@ -27,7 +27,7 @@ export async function getRoom(request, response, next) {
 			image: '',
 		};
 		try {
-			config = JSON.parse(readFileSync('./config.json', 'utf8')).find((c) => c.userPrincipalName == request.params.room);
+			config = JSON.parse(readFileSync('./config/config.json', 'utf8')).find((c) => c.userPrincipalName == request.params.room);
 		} catch (err) {}
 
 		if (room.data) {
@@ -43,7 +43,7 @@ export async function getRoom(request, response, next) {
 
 export async function setRoom(request, response, next) {
 	try {
-		fs.readFile('./config.json', 'utf8', (error, data) => {
+		fs.readFile('./config/config.json', 'utf8', (error, data) => {
 			if (!error) {
 				var config = [...JSON.parse(data)];
 				let index = JSON.parse(data)
@@ -57,7 +57,7 @@ export async function setRoom(request, response, next) {
 					config.push({ ...request.body });
 				}
 
-				fs.writeFile('./config.json', JSON.stringify(config, null, 4), (error) => {
+				fs.writeFile('./config/config.json', JSON.stringify(config, null, 4), (error) => {
 					if (error) {
 						console.log(error);
 						response.status(500);

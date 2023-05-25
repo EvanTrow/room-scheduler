@@ -11,14 +11,18 @@ import { spawn, exec } from 'child_process';
 
 import * as MicrosoftGraph from './controllers/MicrosoftGraph';
 
-if (!fs.existsSync('./config.json')) {
-	fs.writeFileSync('./config.json', '[]');
+if (!fs.existsSync('./config/config.json')) {
+	try {
+		fs.mkdirSync('./config');
+	} catch (error) {}
+
+	fs.writeFileSync('./config/config.json', '[]');
 } else {
 	try {
-		JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+		JSON.parse(fs.readFileSync('./config/config.json', 'utf8'));
 	} catch (error) {
 		console.log('Config file is corrupted. Recreating config.json.', error);
-		fs.writeFileSync('./config.json', '[]');
+		fs.writeFileSync('./config/config.json', '[]');
 	}
 }
 
@@ -34,7 +38,7 @@ app.use(
 
 app.use(bodyParser.json({ limit: '50mb' }));
 
-app.use(express.static(path.join(__dirname, '/dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/api/rooms', MicrosoftGraph.getRooms);
 app.get('/api/room/:room', MicrosoftGraph.getRoom);
@@ -56,6 +60,10 @@ app.post('/api/checkPin', (req, res) => {
 		res.status(500);
 		res.send(String(error));
 	}
+});
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
 app.listen(port, () => {

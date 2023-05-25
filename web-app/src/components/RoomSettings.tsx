@@ -1,5 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 import {
@@ -41,6 +43,9 @@ type RoomSettingsProps = {
 };
 
 export default function RoomSettings(props: RoomSettingsProps) {
+	const navigate = useNavigate();
+	const [cookies, setCookie] = useCookies(['room']);
+
 	const [open, setOpen] = React.useState(false);
 
 	const [unlockOpen, setUnlockOpen] = React.useState(false);
@@ -199,7 +204,7 @@ export default function RoomSettings(props: RoomSettingsProps) {
 							<Close />
 						</IconButton>
 						<Typography sx={{ ml: 2, flex: 1 }} variant='h6' component='div'>
-							Room Settings
+							{props.room.displayName || 'Room'} Settings
 						</Typography>
 						<Button variant='contained' color='primary' onClick={saveConfig}>
 							Save
@@ -231,6 +236,20 @@ export default function RoomSettings(props: RoomSettingsProps) {
 										}
 									}}
 								/>
+							</Button>
+						</Grid>
+
+						<Grid item xs={12}>
+							<Button
+								fullWidth
+								variant='outlined'
+								color='error'
+								onClick={() => {
+									setCookie('room', '');
+									navigate(`/`);
+								}}
+							>
+								Return to Room Selection
 							</Button>
 						</Grid>
 					</Grid>

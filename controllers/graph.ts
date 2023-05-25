@@ -81,3 +81,43 @@ export async function createEvent(token, room, data) {
 			return error;
 		});
 }
+
+export async function getPhoto(email, size, token) {
+	if (size) {
+		return axios
+			.get(`https://graph.microsoft.com/v1.0/users/${email}/photo${size}/$value`, {
+				headers: { Authorization: 'Bearer '.concat(token) },
+				responseType: 'arraybuffer',
+				responseEncoding: 'binary',
+			})
+			.then((response) => {
+				if (response.status !== 404) {
+					return response.data;
+				} else {
+					return false;
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+				return false;
+			});
+	} else {
+		return axios
+			.get(`https://graph.microsoft.com/v1.0/users/${email}/photo/$value`, {
+				headers: { Authorization: 'Bearer '.concat(token) },
+				responseType: 'arraybuffer',
+				responseEncoding: 'binary',
+			})
+			.then((response) => {
+				if (response.status !== 404) {
+					return response.data;
+				} else {
+					return false;
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+				return false;
+			});
+	}
+}

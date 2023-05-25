@@ -63,6 +63,26 @@ export default function RoomSettings(props: RoomSettingsProps) {
 	};
 
 	React.useEffect(() => {
+		const checkPin = async () => {
+			await axios
+				.post(`/api/checkPin`, {
+					pin: pin,
+				})
+				.then(({ data }) => {
+					setPinValid(true);
+					setTimeout(() => {
+						setUnlockOpen(false);
+						setOpen(true);
+					}, 750);
+				})
+				.catch((error) => {
+					setPin('');
+					setError('Invalid Pin!');
+					setPinLoading(false);
+					console.error(error);
+				});
+		};
+
 		if (pin.length >= 6) {
 			setPinLoading(true);
 			checkPin();
@@ -72,26 +92,6 @@ export default function RoomSettings(props: RoomSettingsProps) {
 			setError('');
 		}
 	}, [pin]);
-
-	const checkPin = async () => {
-		await axios
-			.post(`/api/checkPin`, {
-				pin: pin,
-			})
-			.then(({ data }) => {
-				setPinValid(true);
-				setTimeout(() => {
-					setUnlockOpen(false);
-					setOpen(true);
-				}, 750);
-			})
-			.catch((error) => {
-				setPin('');
-				setError('Invalid Pin!');
-				setPinLoading(false);
-				console.error(error);
-			});
-	};
 
 	const handleClose = () => {
 		setOpen(false);
@@ -258,5 +258,3 @@ export default function RoomSettings(props: RoomSettingsProps) {
 		</>
 	);
 }
-
-function getBase64(file: File) {}

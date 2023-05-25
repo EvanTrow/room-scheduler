@@ -205,7 +205,7 @@ export default function RoomSchedule() {
 										width: '58.3333333%',
 										height: '100%',
 										position: 'absolute',
-										filter: theme.palette.mode == 'dark' ? 'brightness(50%)' : 'brightness(90%)',
+										filter: theme.palette.mode === 'dark' ? 'brightness(50%)' : 'brightness(90%)',
 										zIndex: -5,
 									}}
 								/>
@@ -223,7 +223,7 @@ export default function RoomSchedule() {
 															{e.attendees
 																.filter((a) => a.emailAddress.address !== roomID)
 																.map((attendee, i) => (
-																	<Avatar key={i} alt={attendee.emailAddress.name} src='/static/images/avatar/1.jpg' />
+																	<Avatar key={i} alt={attendee.emailAddress.name} src={`/api/photo/${attendee.emailAddress.address}/96`} />
 																))}
 														</AvatarGroup>
 													}
@@ -267,7 +267,7 @@ export default function RoomSchedule() {
 													secondary={
 														meetingOverlaps15.length > 0 && (
 															<span style={{ color: '#ff1723' }}>
-																Unavailable - {meetingOverlaps15.length} Meeting{meetingOverlaps15.length > 1 && 's'} Overlap{meetingOverlaps15.length == 1 && 's'}
+																Unavailable - {meetingOverlaps15.length} Meeting{meetingOverlaps15.length > 1 && 's'} Overlap{meetingOverlaps15.length === 1 && 's'}
 															</span>
 														)
 													}
@@ -280,7 +280,7 @@ export default function RoomSchedule() {
 													secondary={
 														meetingOverlaps30.length > 0 && (
 															<span style={{ color: '#ff1723' }}>
-																Unavailable - {meetingOverlaps30.length} Meeting{meetingOverlaps30.length > 1 && 's'} Overlap{meetingOverlaps30.length == 1 && 's'}
+																Unavailable - {meetingOverlaps30.length} Meeting{meetingOverlaps30.length > 1 && 's'} Overlap{meetingOverlaps30.length === 1 && 's'}
 															</span>
 														)
 													}
@@ -293,7 +293,7 @@ export default function RoomSchedule() {
 													secondary={
 														meetingOverlaps60.length > 0 && (
 															<span style={{ color: '#ff1723' }}>
-																Unavailable - {meetingOverlaps60.length} Meeting{meetingOverlaps60.length > 1 && 's'} Overlap{meetingOverlaps60.length == 1 && 's'}
+																Unavailable - {meetingOverlaps60.length} Meeting{meetingOverlaps60.length > 1 && 's'} Overlap{meetingOverlaps60.length === 1 && 's'}
 															</span>
 														)
 													}

@@ -47,6 +47,9 @@ app.post('/api/room/:room', MicrosoftGraph.setRoom);
 app.get('/api/events/:room', MicrosoftGraph.getEvents);
 app.post('/api/events/:room', MicrosoftGraph.createEvent);
 
+app.get('/api/photo/:email/:size', MicrosoftGraph.getPhoto);
+app.get('/api/photo/:email', MicrosoftGraph.getPhoto);
+
 app.post('/api/checkPin', (req, res) => {
 	try {
 		if (req.body.pin === process.env.ADMIN_PIN) {

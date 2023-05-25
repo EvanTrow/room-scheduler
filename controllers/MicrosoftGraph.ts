@@ -145,3 +145,35 @@ export async function createEvent(request, response, next) {
 		response.status(500).send(error);
 	}
 }
+
+export async function getPhoto(request, response, next) {
+	try {
+		var size = request.params.size;
+		var email = request.params.email || '';
+
+		if (email === '') {
+			response.status(404).send('missing email');
+		} else {
+			var availableSizes = ['48', '64', '96', '120', '240', '360', '432'];
+			if (size) {
+				if (availableSizes.includes(size)) {
+					size = 's/' + size + 'x' + size;
+				}
+			}
+
+			var token = await graph.getToken();
+			var photo = await graph.getPhoto(email, size, token);
+
+			if (photo) {
+				response.set('Content-Type', 'image/png');
+				response.set('Content-Length', photo.length);
+				response.end(photo);
+			} else {
+				response.status(404).send('photo not found');
+			}
+		}
+	} catch (error) {
+		console.log(error);
+		response.status(500).send(error);
+	}
+}

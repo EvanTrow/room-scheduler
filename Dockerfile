@@ -1,27 +1,19 @@
-FROM mhart/alpine-node:12
+# Pull base image.
+FROM node:18-alpine
 
-# Create app directory
-WORKDIR /usr/src/app/
+WORKDIR /app
 
-# Copy all files into image
-COPY . ./
+COPY package.json package.json
+COPY tsconfig.json tsconfig.json
+COPY index.ts index.ts
+COPY dist dist
 
-# install packages
+# install deps
 RUN npm install
 
-# create react build
-RUN npm run build
-
-# tell node is docker
-ENV IS_DOCKER_CONTAINER yes
-
-# timezone
-ENV TZ=America/New_York
-RUN apk --update add \
-		tzdata \
-	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apk del tzdata
-
-
+# Expose ports
 EXPOSE 8080
+
 CMD [ "npm", "start" ]
+
+VOLUME '/app'

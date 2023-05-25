@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# local-caster
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Web UI:
 
-## Available Scripts
+![Cast](./docs/cast.png)
 
-In the project directory, you can run:
+### Settings:
 
-### `npm start`
+![Settings](./docs/settings.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Development
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Requirements
 
-### `npm test`
+-   [NodeJS](https://nodejs.org/en/download/)
+-   [Python3](https://www.python.org/downloads/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Install NodeJS Dependencies
 
-### `npm run build`
+```shell
+npm install
+cd web-app && npm install && cd ..
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Install Python Dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell
+pip3 install catt
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Run Dev Instance
 
-### `npm run eject`
+```shell
+npm run dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Docker
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Build Docker Image
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Build web UI and create image locally
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```shell
+npm run build
+docker build -t evantrow/local-caster .
+```
 
-## Learn More
+## Publish Docker Image
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Upload image to Github Docker Registry
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```shell
+docker push evantrow/local-caster:latest
+```
 
-### Code Splitting
+## Deploy Image
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```shell
+docker run -d --name=local-caster -p 8080:8080 evantrow/local-caster:latest
+```
 
-### Analyzing the Bundle Size
+### Enable Chromecast Discover
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```shell
+docker run -d --name=local-caster --network host -e PORT=8080 ghcr.io/pennair/local-caster:latest
+```

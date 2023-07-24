@@ -1,5 +1,5 @@
 {
-	"name": "local-caster",
+	"name": "room-scheduler",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -7,19 +7,20 @@
 		"start": "ts-node index.ts",
 		"web": "cd web-app && npm start",
 		"dev": "concurrently \"nodemon index.ts\" \"cd web-app && npm start\"",
-		"build": "cd web-app && npm run build"
+		"build": "cd web-app && npm run build && cd .. && docker build -t evantrow/room-scheduler . --no-cache",
+		"publish": "docker push evantrow/room-scheduler"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/pennair/local-caster.git"
+		"url": "git+https://github.com/pennair/room-scheduler.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/pennair/local-caster/issues"
+		"url": "https://github.com/pennair/room-scheduler/issues"
 	},
-	"homepage": "https://github.com/pennair/local-caster#readme",
+	"homepage": "https://github.com/pennair/room-scheduler#readme",
 	"dependencies": {
 		"@types/express": "^4.17.16",
 		"axios": "^1.4.0",

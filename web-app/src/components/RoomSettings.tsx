@@ -55,8 +55,8 @@ export default function RoomSettings(props: RoomSettingsProps) {
 	const [error, setError] = React.useState('');
 
 	// settings
-	const [allowWalkup, setAllowWalkup] = React.useState<boolean>(props.room.allowWalkup || true);
-	const [image, setImage] = React.useState<string>(props.room.image || '');
+	const [allowWalkup, setAllowWalkup] = React.useState<boolean>(props.room.allowWalkup ?? false);
+	const [image, setImage] = React.useState<string>(props.room.image ?? '');
 
 	const handleDigit = (digit: number) => {
 		setPin(pin + digit.toString());

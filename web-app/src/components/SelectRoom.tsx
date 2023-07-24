@@ -27,9 +27,9 @@ function SelectRoom() {
 	const [rooms, setRooms] = React.useState<Room[]>([]);
 
 	React.useEffect(() => {
-		if (cookies.room !== '') {
-			navigate(`/${cookies.room}`);
-		} else {
+		console.log(typeof cookies.room);
+
+		if (typeof cookies.room == 'undefined' || cookies.room === '') {
 			axios
 				.get(`/api/rooms`)
 				.then(({ data }) => {
@@ -40,6 +40,8 @@ function SelectRoom() {
 					console.error(error);
 					setLoading(false);
 				});
+		} else {
+			navigate(`/${cookies.room}`);
 		}
 	}, []);
 

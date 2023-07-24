@@ -11,6 +11,7 @@ COPY dist dist
 
 # install deps
 RUN npm install
+RUN npm install ts-node -g
 
 # Expose ports
 EXPOSE 8080
